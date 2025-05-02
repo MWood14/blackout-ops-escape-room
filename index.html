@@ -26,6 +26,11 @@
             padding: 0.5rem;
             margin-top: 1rem;
         }
+        img {
+            max-width: 100%;
+            margin-top: 1rem;
+            border: 1px solid #333;
+        }
     </style>
 </head>
 <body>
@@ -41,10 +46,13 @@ This operation is dark. No backup. No rescue.<br>
 <div id="section1" class="section">
     <h2>Section 1: Interrogation Cell</h2>
     <p>
-        The keypad is blood-smeared. A message is scratched into the table: "The last 4 digits of the time they broke me."<br>
-        A broken clock shows 03:47.<br><br>
+        You regain consciousness in a dimly lit concrete room. There's a table in front of you with something scratched into it.<br>
+        A flickering light swings above, revealing a broken analog clock on the wall.<br>
+        <strong>Clue:</strong> "The last 4 of the time they broke me."<br>
+        <br>
         <strong>Enter the 4-digit code:</strong>
     </p>
+    <img src="interrogation_room_section1.png" alt="Interrogation Room">
     <input type="text" id="codeInput" maxlength="4">
     <button onclick="checkCode()">Submit</button>
     <p id="resultMsg"></p>
@@ -53,9 +61,9 @@ This operation is dark. No backup. No rescue.<br>
 <div id="section2" class="section">
     <h2>Section 2: Surveillance Hall</h2>
     <p>
-        You find a monitor displaying 3 feeds: hallway, guard schedule (rotation every 6 minutes), and a map labeled 6, 2, 9.<br>
-        Safe zones are NW, SE, Center. Avoid the loop.<br><br>
-        <strong>Select the safe path:</strong>
+        A panel flickers to life, showing 3 surveillance feeds: hallway, a guard schedule, and a facility map marked 6, 2, 9.<br>
+        Guards rotate every 6 minutes. Avoid detection.<br>
+        <strong>Choose your path:</strong>
     </p>
     <select id="pathSelect">
         <option value="">-- Choose a path --</option>
@@ -68,16 +76,30 @@ This operation is dark. No backup. No rescue.<br>
     <p id="pathResult"></p>
 </div>
 
+<div id="section3" class="section">
+    <h2>Section 3: Server Room</h2>
+    <p>
+        You reach a secure terminal.<br>
+        A sticky note on the monitor reads: <em>"First letters: my team — Ghost, Raven, Ice, Blackout."</em><br>
+        A message flashes on the screen: <strong>"Agent K. Dolen sent the last signal."</strong><br>
+        <br>
+        <strong>Enter the password:</strong>
+    </p>
+    <input type="text" id="passwordInput">
+    <button onclick="checkPassword()">Submit</button>
+    <p id="passResult"></p>
+</div>
+
 <script>
     function startMission() {
         document.getElementById('section1').classList.add('visible');
     }
 
     function checkCode() {
-        const input = document.getElementById('codeInput').value;
+        const input = document.getElementById('codeInput').value.trim();
         const result = document.getElementById('resultMsg');
-        if (input === "0347" || input === "347") {
-            result.innerHTML = "<strong>Access Granted.</strong> Proceeding to next section...";
+        if (input === "1009") {
+            result.innerHTML = "<strong>Access Granted.</strong> Proceeding...";
             result.style.color = "#00ffcc";
             setTimeout(() => {
                 document.getElementById('section2').classList.add('visible');
@@ -95,8 +117,22 @@ This operation is dark. No backup. No rescue.<br>
         if (path === "A") {
             result.innerHTML = "<strong>Correct path. Proceed to Server Room.</strong>";
             result.style.color = "#00ffcc";
+            document.getElementById('section3').classList.add('visible');
+            document.getElementById('section3').scrollIntoView({ behavior: 'smooth' });
         } else {
             result.innerHTML = "Wrong path. Motion sensors triggered.";
+            result.style.color = "red";
+        }
+    }
+
+    function checkPassword() {
+        const input = document.getElementById('passwordInput').value.trim().toUpperCase();
+        const result = document.getElementById('passResult');
+        if (input === "GRIB") {
+            result.innerHTML = "<strong>Password accepted. Proceed to Tunnel Navigation...</strong>";
+            result.style.color = "#00ffcc";
+        } else {
+            result.innerHTML = "Access denied. Incorrect password.";
             result.style.color = "red";
         }
     }
