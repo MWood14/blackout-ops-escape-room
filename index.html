@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackout Ops: Escape Room</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ffcc;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .section {
+            display: none;
+            margin-top: 2rem;
+        }
+        .visible {
+            display: block;
+        }
+        input, button, select {
+            background: #111;
+            color: #00ffcc;
+            border: 1px solid #00ffcc;
+            padding: 0.5rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<h1>BLACKOUT OPS</h1>
+<p><strong>Mission Briefing:</strong><br>
+Shadow Unit Nine, this is Command. You were deployed to Blacksite Karov for intel recovery. Something went wrong. Comms are down. You woke up alone—trapped.<br>
+You have 60 minutes to extract the intel, identify the breach, and reach the extraction point.<br><br>
+This operation is dark. No backup. No rescue.<br>
+</p>
+<button onclick="startMission()">Begin Mission</button>
+
+<div id="section1" class="section">
+    <h2>Section 1: Interrogation Cell</h2>
+    <p>
+        The keypad is blood-smeared. A message is scratched into the table: "The last 4 digits of the time they broke me."<br>
+        A broken clock shows 03:47.<br><br>
+        <strong>Enter the 4-digit code:</strong>
+    </p>
+    <input type="text" id="codeInput" maxlength="4">
+    <button onclick="checkCode()">Submit</button>
+    <p id="resultMsg"></p>
+</div>
+
+<div id="section2" class="section">
+    <h2>Section 2: Surveillance Hall</h2>
+    <p>
+        You find a monitor displaying 3 feeds: hallway, guard schedule (rotation every 6 minutes), and a map labeled 6, 2, 9.<br>
+        Safe zones are NW, SE, Center. Avoid the loop.<br><br>
+        <strong>Select the safe path:</strong>
+    </p>
+    <select id="pathSelect">
+        <option value="">-- Choose a path --</option>
+        <option value="A">NW → SE → Center</option>
+        <option value="B">SE → NW → Loop</option>
+        <option value="C">Center → NE → SW</option>
+        <option value="D">Loop → NE → SE</option>
+    </select>
+    <button onclick="checkPath()">Submit</button>
+    <p id="pathResult"></p>
+</div>
+
+<script>
+    function startMission() {
+        document.getElementById('section1').classList.add('visible');
+    }
+
+    function checkCode() {
+        const input = document.getElementById('codeInput').value;
+        const result = document.getElementById('resultMsg');
+        if (input === "0347" || input === "347") {
+            result.innerHTML = "<strong>Access Granted.</strong> Proceeding to next section...";
+            result.style.color = "#00ffcc";
+            setTimeout(() => {
+                document.getElementById('section2').classList.add('visible');
+                document.getElementById('section2').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        } else {
+            result.innerHTML = "Incorrect. Try again.";
+            result.style.color = "red";
+        }
+    }
+
+    function checkPath() {
+        const path = document.getElementById('pathSelect').value;
+        const result = document.getElementById('pathResult');
+        if (path === "A") {
+            result.innerHTML = "<strong>Correct path. Proceed to Server Room.</strong>";
+            result.style.color = "#00ffcc";
+        } else {
+            result.innerHTML = "Wrong path. Motion sensors triggered.";
+            result.style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>
