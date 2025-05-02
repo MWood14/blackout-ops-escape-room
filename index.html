@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackout Ops: Escape Room</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ffcc;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .section {
+            display: none;
+            margin-top: 2rem;
+        }
+        .visible {
+            display: block;
+        }
+        select, input[type="text"], input[type="submit"] {
+            background-color: #0d0d0d;
+            color: #00ffcc;
+            border: 1px solid #00ffcc;
+            padding: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+
+<h2>BLACKOUT OPS</h2>
+<p><strong>Mission Briefing:</strong><br>
+Shadow Unit Nine, this is Command. You were deployed to Blacksite Karov for intel recovery. Something went wrong. Comms are down. You woke up alone—trapped.<br>
+You have 60 minutes to extract the intel, identify the breach, and reach the extraction point.<br><br>
+This operation is dark. No backup. No rescue.</p>
+
+<button onclick="showSection('sec1')">Begin Mission</button>
+
+<div id="sec1" class="section">
+    <h3>Section 1: Interrogation Cell</h3>
+    <p>You regain consciousness in a dimly lit concrete room. There's a table in front of you with something scratched into it.<br>
+    A flickering light swings above, revealing a broken analog clock on the wall.</p>
+    <img src="interrogation.jpg" alt="Interrogation Room" width="600"><br><br>
+    <label>Enter the 4-digit code:</label><br>
+    <input type="text" id="code1" placeholder="Interrogation Room">
+    <input type="submit" value="Submit" onclick="checkCode1()">
+</div>
+
+<div id="sec2" class="section">
+    <p><strong>Access Granted. Processing...</strong></p>
+    <h3>Section 2: Surveillance Hall</h3>
+    <p>A panel flickers to life, showing 3 surveillance feeds: hallway, a guard schedule, and a floor map. Avoid detection.</p>
+    <img src="E916EC23-7DCD-4B94-A5FE-EB8C5E58B65D.png" alt="Surveillance Monitors" width="600"><br><br>
+    <label>Choose your path:</label><br>
+    <select id="path">
+        <option value="">--Choose a path--</option>
+        <option value="correct">2 → 6 → exit</option>
+        <option value="wrong1">2 → 9 → exit</option>
+        <option value="wrong2">2 → 9 → 6</option>
+        <option value="wrong3">2 → 6 → 9</option>
+        <option value="wrong4">6 → 2 → 9</option>
+    </select>
+    <input type="submit" value="Submit" onclick="checkPath()">
+</div>
+
+<script>
+    function showSection(id) {
+        document.getElementById(id).classList.add('visible');
+    }
+
+    function checkCode1() {
+        const code = document.getElementById('code1').value;
+        if (code === '1009') {
+            showSection('sec2');
+        } else {
+            alert('Incorrect code. Try again.');
+        }
+    }
+
+    function checkPath() {
+        const path = document.getElementById('path').value;
+        if (path === 'correct') {
+            alert('Correct. Moving to next section...');
+            // Proceed to section 3 logic here
+        } else {
+            alert('Wrong path. You were spotted.');
+        }
+    }
+</script>
+
+</body>
+</html>
